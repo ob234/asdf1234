@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 from numba import njit, prange
@@ -132,9 +132,7 @@ class FastOps(TensorOps):
 # Implementations
 
 
-def tensor_map(
-    fn: Callable[[float], float]
-) -> Callable[[Storage, Shape, Strides, Storage, Shape, Strides], None]:
+def tensor_map(fn: Callable[[float], float]) -> Any:
     """
     NUMBA low_level tensor_map function. See `tensor_ops.py` for description.
 
@@ -178,16 +176,11 @@ def tensor_map(
                 out[i] = fn(in_storage[i])
                 
         # END ASSIGN3.1      
-        #raise NotImplementedError("Need to include this file from past assignment.")
 
     return njit(parallel=True)(_map)  # type: ignore
 
 
-def tensor_zip(
-    fn: Callable[[float, float], float]
-) -> Callable[
-    [Storage, Shape, Strides, Storage, Shape, Strides, Storage, Shape, Strides], None
-]:
+def tensor_zip(fn: Callable[[float, float], float]) -> Any:
     """
     NUMBA higher-order tensor zip function. See `tensor_ops.py` for description.
 
@@ -250,14 +243,11 @@ def tensor_zip(
             for i in prange(len(out)):
                 out[i] = fn(a_storage[i], b_storage[i])
         # END ASSIGN 3.1
-        #raise NotImplementedError("Need to include this file from past assignment.")
 
     return njit(parallel=True)(_zip)  # type: ignore
 
 
-def tensor_reduce(
-    fn: Callable[[float, float], float]
-) -> Callable[[Storage, Shape, Strides, Storage, Shape, Strides, int], None]:
+def tensor_reduce(fn: Callable[[float, float], float]) -> Any:
     """
     NUMBA higher-order tensor reduce function. See `tensor_ops.py` for description.
 
@@ -369,7 +359,6 @@ def _tensor_matrix_multiply(
                 )
                 out[out_position] = acc
     # END ASSIGN 3.2 
-    #raise NotImplementedError("Need to include this file from past assignment.")
 
 
 tensor_matrix_multiply = njit(parallel=True, fastmath=True)(_tensor_matrix_multiply)

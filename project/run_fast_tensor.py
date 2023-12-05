@@ -34,8 +34,6 @@ class Network(minitorch.Module):
         h = self.layer2.forward(h).relu()
         return self.layer3.forward(h).sigmoid()
         # END ASSIGN3.5
-        #raise NotImplementedError("Need to include this file from past assignment.")
-
 
 class Linear(minitorch.Module):
     def __init__(self, in_size, out_size, backend):
@@ -51,7 +49,6 @@ class Linear(minitorch.Module):
         batch, in_size = x.shape
         return x.view(batch, in_size) @ self.weights.value + self.bias.value 
         # END ASSIGN3.5
-        #raise NotImplementedError("Need to include this file from past assignment.")
 
 
 class FastTrain:
